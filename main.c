@@ -6,7 +6,7 @@
 /*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 17:28:45 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/01/24 16:05:14 by jeguerin         ###   ########.fr       */
+/*   Updated: 2024/01/24 18:33:49 by jeguerin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,9 @@ void	create_window(t_game *game)
 	// printf("map_height: %d, map_width: %d, y_rect: %d, x_rect: %d\n", game->map_height, game->map_width, game->y_rect, game->x_rect);
 	mlx_loop_hook(game->mlx, &handle_no_event, game);
 	mlx_loop_hook(game->mlx, &render, game);
-	mlx_key_hook(game->win, &manage_keypress, game);
+	mlx_hook(game->win, KeyPress, KeyPressMask, &manage_keypress, game);
+    mlx_hook(game->win, KeyRelease, KeyReleaseMask, &handle_keyrelease, game);
+	// mlx_key_hook(game->win, &manage_keypress, game); ..
 	mlx_loop(game->mlx); // Waiting for events like keyboard, etc.
 	mlx_destroy_image(game->mlx, game->image);
 	mlx_destroy_display(game->mlx);

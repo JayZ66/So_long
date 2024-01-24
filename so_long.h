@@ -6,7 +6,7 @@
 /*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:48:48 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/01/24 14:41:02 by jeguerin         ###   ########.fr       */
+/*   Updated: 2024/01/24 18:30:41 by jeguerin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int		display_rect(t_game *game);
 int		render(t_game *game);
 void	display_background(t_game *game, int color);
 int		handle_no_event(void *game);
+int		handle_keyrelease(int key, void *data);
 
 #endif
 
