@@ -1,0 +1,48 @@
+
+/* Message erreur : Error\n
+
+Gerer erreur map non rectangle. => OK
+Check la ligne map[i] avec map[i + 1]
+Si different return ;
+
+Gerer erreurs mur : => OK
+- Regarder tous les extremites des mur pour == 1.
+map[i] ==> Check ligne avec str_comp (premier et last ligne).
+- Autre comparaison : check map[i][0] == 1 & strlen(map[i][0]) == 1
+Si == 1 alors tu i++;
+Tu checks d'abord la premiere ligne en entier en iterant, puis tu checks
+map[i][strlen] avec map[i][0] pour le 1er et le dernier.
+*/
+
+/*
+Tu checks si 2 parametres ou erreur (car prog. + nom de la map); => OK : Else ?
+*/
+
+/*
+Check erreurs map :
+- Un player; => OK
+- Au moins un collectible; => OK
+- Une exit; => OK
+- Que 1, 0, P, C et E sinon pas bon. (en first);
+*/
+
+/*
+Appuyer sur echap et croix fenetre pour sortir.
+*/
+
+/*
+Check chemin valide ==> Floodfill.
+*/
+
+// Fonction qui initialise les var. de la structure
+
+/*
+Il faudra faire un tableau **temp (dans la fonction, no struct) pour récupérer
+ce qu'il y a dans **map. Car quand on check ce qui est parcouru, on doit mettre des x, donc on
+ecrit directement dessus et il ne faut pas modifier le fichier de base.
+Malloc au début le **temp et le free une fois terminé.
+*/
+
+/* 
+Fonction d'initialisation des variables de ma structure.
+*/

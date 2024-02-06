@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   handle_image.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:42:25 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/01/24 16:35:52 by jeguerin         ###   ########.fr       */
+/*   Updated: 2024/01/26 17:13:55 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
 // Pix_add = Calculate the memory address to write the pixel to pix_add.
 // Last line = Write the color to the calculated memory address.
 // This function obtain the memory add. of the pixel in the image.
-
 void	image_pix_put(t_game *game, int x, int y, int color)
 {
 	char	*pix_add;
@@ -46,7 +46,6 @@ void	create_image(t_game *game)
 	game->image = mlx_new_image(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (game->image == NULL)
     {
-        fprintf(stderr, "Error: Failed to create image\n");
         mlx_destroy_window(game->mlx, game->win);
         free(game->mlx);
         return ;

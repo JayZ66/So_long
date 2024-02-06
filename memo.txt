@@ -6,7 +6,7 @@
 #    By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 14:53:16 by jeguerin          #+#    #+#              #
-#    Updated: 2024/01/24 18:20:29 by jeguerin         ###   ########.fr        #
+#    Updated: 2024/01/24 14:12:39 by jeguerin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -157,14 +157,3 @@ clavier et à la souris, ainsi que des événements d'exposition.
 Les événements d'exposition sont déclenchés lorsque le contenu d'une fenêtre
 est perdu (par exemple, lorsque la fenêtre de la minilibx est partiellement ou
 entièrement recouverte par une autre) et doit être redessiné.
-
-MLX_HOOK :
-La fonction mlx_hook prend cinq arguments. Nous avons déjà expliqué ce que
-sont win_ptr, func_ptr et param, mais il y a deux nouveaux paramètres :
-
-- x_event est un entier correspondant au nom de l'événement X.
-Tu peux trouver tous les noms d'événements dans l'en-tête X11/X.h.
-
-- x_mask est un masque de bits correspondant à l'événement X.
-Il est utilisé par la minilibx pour filtrer les événements reçus par la fenêtre.
-La liste de tous les masques disponibles est également définie dans X11/X.h.

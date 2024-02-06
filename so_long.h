@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:48:48 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/01/24 18:30:41 by jeguerin         ###   ########.fr       */
+/*   Updated: 2024/02/05 19:43:04 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@
 # include <stddef.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <fcntl.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include "get_next_line/get_next_line.h"
 # include "minilibx/mlx.h"
+# include "Libft/libft.h"
 
 # define MLX_ERROR 1
 # define WINDOW_WIDTH 1920
@@ -34,6 +36,17 @@
 # define YELLOW 255 << 16 | 255 << 8 | 0
 # define MAGENTA 255 << 16 | 0 << 8 | 255
 # define CYAN 0 << 16 | 255 << 8 | 255
+
+# define KEY_ESC 65307
+# define KEY_UP 65362
+# define KEY_DOWN 65364
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
+# define KEY_W 119
+# define KEY_S 115
+# define KEY_A 97
+# define KEY_D 100
+# define SZ 32
 // # define BLACK 0xFF000000
 // # define RED 0xFFFF0000
 // # define GREEN 0xFF00FF00
@@ -54,7 +67,7 @@ typedef struct s_game
 	void	*mlx; // Pointeur vers l'instance MLX.
 	void	*win; // Pointeur vers la fenetre.
 	int		shape_width; // Largeur de la forme a afficher.
-	int		shape_height; // Hauteur de la map.
+	int		shape_height; // Hauteur de forme à afficher.
 	char	**map; // Tableau bidimensionnel representant la map.
 	int		player_pos_x; // Position X du joueur sur la carte.
 	int		player_pos_y; // Position Y du joueur sur la carte.
@@ -81,10 +94,12 @@ typedef struct s_game
 // fonction avec l'endian de la machine (0 ou 1). Indique comment les octets
 // sont stockes dans la memoire.
 	int		color;
+	int		map_height; // Hauteur (nb de lignes)
+	int		map_width; // Largueur (nb de colonnes)
+	char	*ber;
 }	t_game;
 
 
-int	main();
 void	create_window(t_game *game);
 void	create_image(t_game *game);
 char	*get_image_add(t_game *game);
@@ -96,7 +111,21 @@ int		display_rect(t_game *game);
 int		render(t_game *game);
 void	display_background(t_game *game, int color);
 int		handle_no_event(void *game);
-int		handle_keyrelease(int key, void *data);
+int		handle_keyrelease(int keysym, void *game);
+int 	check_exit(t_game *game);
+int 	check_collect(t_game *game);
+int 	check_player(t_game *game);
+int 	map_shape_error(t_game *game);
+int 	map_wall_error(t_game *game);
+int 	read_map(const char *file, t_game *game);
+int		alloc_tab(t_game *game);
+int		map_implementation(t_game *game);
+int		ft_strcmp(const char *s1, const char *s2);
+
+
+
+
+
 
 #endif
 
