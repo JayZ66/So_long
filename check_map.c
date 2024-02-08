@@ -6,7 +6,7 @@
 /*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 09:32:25 by jeza              #+#    #+#             */
-/*   Updated: 2024/02/05 19:38:14 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/08 15:22:37 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int check_exit(t_game *game)
         j = 0;
         while (j < game->map_width)
         {
-            if (game->map[i][j] == 'e')
+            if (game->map[i][j] == 'E') // Check la position de mon exit.
                 exit_count++;
             j++;
         }
@@ -52,7 +52,7 @@ int check_collect(t_game *game)
         j = 0;
         while(j < game->map_width)
         {
-            if (game->map[i][j] == 'c')
+            if (game->map[i][j] == 'C')
                 collect_count++;
             j++;
         }
@@ -79,8 +79,12 @@ int check_player(t_game *game)
         j = 0;
         while (j < game->map_width)
         {
-            if (game->map[i][j] == 'p')
+            if (game->map[i][j] == 'P')
+            {
+                game->player.pos_x = j;
+                game->player.pos_y = i;
                 player_count++;
+            }
             j++;
         }
         i++;

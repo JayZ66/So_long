@@ -6,7 +6,7 @@
 /*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 17:28:45 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/02/05 20:24:58 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/08 14:31:41 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,123 +114,107 @@ int	display_pixel(t_game *game)
 // fenêtre lorsqu'elle n'est plus nécessaire.
 // If some errors happen we know that we should return a NULL pointer.
 
-void	create_window(t_game *game)
+void	init_imgs(t_game *game)
 {
-	game->mlx = mlx_init(); // This function creates a struct. all the stuff we'll need in the MLX. Return the address of his struct.
-	if (game->mlx == NULL)
-		return ;
-	game->win = mlx_new_window(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
-		"So long - Jezabel Guerin");
-	if (game->win == NULL)
-	{
-		free(game->mlx);
-		return ;
-	}
-	create_image(game);
-	game->image_add = get_image_add(game);
-	mlx_loop_hook(game->mlx, &handle_no_event, game);
-	mlx_loop_hook(game->mlx, &render, game);
-	mlx_hook(game->win, KeyPress, KeyPressMask, &manage_keypress, game);
-    mlx_hook(game->win, KeyRelease, KeyReleaseMask, &handle_keyrelease, game);
-	// mlx_key_hook(game->win, &manage_keypress, game);
-	mlx_loop(game->mlx); // Waiting for events like keyboard, etc.
-	mlx_destroy_image(game->mlx, game->image);
-	mlx_destroy_display(game->mlx);
-	free(game->mlx);
-}
-// I'm not using a pointer because it's not necessary to work with the real
-// value of the var., a copy is used here.
+	int	size;
 
-int	alloc_tab(t_game *game)
+	size = 32;
+	game->floor = mlx_xpm_file_to_image(game->mlx, "sprites/Floor3.xpm", &size, &size);
+	game->col = mlx_xpm_file_to_image(game->mlx, "sprites/gay_bag.xpm", &size, &size);
+	game->wall = mlx_xpm_file_to_image(game->mlx, "sprites/Wall.xpm", &size, &size);
+	game->player.player = mlx_xpm_file_to_image(game->mlx, "sprites/Player1.xpm", &size, &size);
+	// game->exit
+}
+
+void	fill_window(t_game *game)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	game->map = (char **)malloc(game->map_height * sizeof(char *)); // Allouer pour les pointeurs de ligne.
-	if (game->map == NULL)
-		return (1);
-	while (i < game->map_height) // Allouer chq ligne du tableau.
+	while(game->map[i])
 	{
-		game->map[i] = (char *)malloc((game->map_width + 1) * sizeof(char)); // +1 pour le caractère de fin de chaîne.
-		if (game->map[i] == NULL)
+		j = 0;
+		while(game->map[i][j])
 		{
-			while (j < i)
-			{
-				free(game->map[j]);
-				j++;
-			}
-			free (game->map);
-			return (1);
+			if (game->map[i][j] == '0')
+				mlx_put_image_to_window(game->mlx, game->win, game->floor, j * 32, i * 32);
+			else if (game->map[i][j] == 'C')
+				mlx_put_image_to_window(game->mlx, game->win, game->col, j * 32, i * 32);
+			else if (game->map[i][j] == '1')
+				mlx_put_image_to_window(game->mlx, game->win, game->wall, j * 32, i * 32);
+			else if (game->map[i][j] == 'P')
+				mlx_put_image_to_window(game->mlx, game->win, game->player.player, j * 32, i * 32);
+			j++;
 		}
 		i++;
 	}
-	return (0);
 }
 
-/*
-La première allocation est faite pour l'ensemble du tableau (les pointeurs de ligne), 
-et ensuite, dans la boucle, chaque ligne individuelle est allouée. 
-Cela crée un tableau de tableaux.
+void	create_window(t_game *game)
+{
+	game->mlx = mlx_init(); // This function creates a struct. all the stuff we'll need in the MLX. Return the address of his struct.
+	if (game->mlx == NULL)
+		return ;
+	game->win = mlx_new_window(game->mlx, game->map_width * 32, game->map_height * 32,
+		"So long - Jezabel Guerin");
+	if (game->win == NULL)
+	{
+		free(game->mlx);
+		return ;
+	}
+	init_imgs(game);
+	fill_window(game);
+	//game->image_add = get_image_add(game);
+	// mlx_loop_hook(game->mlx, &render, game);
+	mlx_loop_hook(game->mlx, &handle_no_event, game); // Needed to properly close the win. + To manage ennemies mooves.
+	mlx_hook(game->win, KeyPress, KeyPressMask, &manage_keypress, game); // Use it just once to manage all keypress.
+	mlx_hook(game->win, 17, KeyPressMask, &free_everything, game);
+    // mlx_hook(game->win, KeyRelease, KeyReleaseMask, &handle_keyrelease, game);
+	// mlx_key_hook(game->win, &manage_keypress, game);
+	mlx_loop(game->mlx); // Waiting for events like keyboard, etc.
+	// mlx_destroy_image(game->mlx, game->image);
+	mlx_destroy_display(game->mlx);
+	free(game->mlx);
+}
 
-Voici une explication plus détaillée :
-
-game->map : C'est un pointeur de pointeur (char **). 
-Il pointe vers le début du tableau de pointeurs.
-
-game->map[i] : C'est un pointeur (char *). Chaque élément game->map[i] pointe vers 
-le début de la ligne i du tableau bidimensionnel.
-
-Donc, lorsque vous allouez de la mémoire pour les "pointeurs de ligne" avec 
-game->map = (char **)malloc(map_height * sizeof(char *)), cela crée un tableau de 
-map_height pointeurs, où chaque pointeur peut pointer vers le début de sa ligne respective.
-*/
 
 int	map_implementation(t_game *game)
 {
 	int	result;
 
-	result = read_map(game->ber, game);
-	if (result == 1)
-	{
-		write(1, "Error\n", 6);
-		return (1);
-	}
-	result = alloc_tab(game);
-	if (result == 1)
-	{
-		write(1, "Error\n", 6);
-		return (1);
-	}
+	read_map(game->ber, game);
+	alloc_map(game);
+	fill_tab(game->ber, game);
 	result = map_shape_error(game);
 	if (result == 1)
 	{
-		write(1, "Error\n", 6);
+		write(1, "Error map shape\n", 16);
 		return (1);
 	}
 	result = map_wall_error(game);
 	if (result == 1)
 	{
-		write(1, "Error\n", 6);
+		write(1, "Error wall\n", 11);
 		return (1);
 	}
 	result = check_exit(game);
 	if (result == 1)
 	{
-		write(1, "Error\n", 6);
+		write(1, "Error exit\n", 11);
 		return (1);
 	}
 	result = check_collect(game);
 	if (result == 1)
 	{
-		write(1, "Error\n", 6);
+		write(1, "Error collect\n", 14);
 		return (1);
 	}
 	result = check_player(game);
 	if (result == 1)
 	{
-		write(1, "Error\n", 6);
+		write(1, "Error player\n", 13);
 		return (1);
 	}
 	return (0);
@@ -245,10 +229,13 @@ int	main(int argc, char **argv)
 		 write(1, "Error\n", 6);
 		 return (1);
 	}
-	game.ber = argv[1];  // Pass the filename as a command-line argument
+	game.ber = (char *)malloc((ft_strlen(argv[1])) * sizeof(char));
+	if (game.ber == NULL) // Malloc with the size of av[1].
+		return (1);
+	game.ber = ft_strdup(argv[1]);  // Pass the filename as a command-line argument
 	game.mlx = NULL;
 	if (map_implementation(&game) == 0)
 		create_window(&game);
-	free(game.map);
+	free(game.ber);
 	return (0);
 }

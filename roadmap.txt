@@ -1,7 +1,7 @@
 
 /* Message erreur : Error\n
 
-Gerer erreur map non rectangle. => OK
+Gerer erreur map non rectangle ou carré via la taille de la ligne. => OK
 Check la ligne map[i] avec map[i + 1]
 Si different return ;
 
@@ -46,3 +46,5 @@ Malloc au début le **temp et le free une fois terminé.
 /* 
 Fonction d'initialisation des variables de ma structure.
 */
+
+// Faire une fonction générale pour les mouvements et ensuite use for each key.

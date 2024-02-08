@@ -6,13 +6,14 @@
 /*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:48:48 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/02/05 19:43:04 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/08 10:58:24 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
+# include <stdio.h>
 # include <limits.h>
 # include <stddef.h>
 # include <unistd.h>
@@ -47,6 +48,8 @@
 # define KEY_A 97
 # define KEY_D 100
 # define SZ 32
+# define ON_DESTROY 17
+
 // # define BLACK 0xFF000000
 // # define RED 0xFFFF0000
 // # define GREEN 0xFF00FF00
@@ -62,6 +65,12 @@
 // }				t_img;
 // Revoir le code (a adapter) pour creer cette sous-structure.
 
+typedef struct	s_player {
+	int		pos_x;
+	int		pos_y;
+	void	*player;
+}	t_player;
+
 typedef struct s_game
 {
 	void	*mlx; // Pointeur vers l'instance MLX.
@@ -69,13 +78,9 @@ typedef struct s_game
 	int		shape_width; // Largeur de la forme a afficher.
 	int		shape_height; // Hauteur de forme à afficher.
 	char	**map; // Tableau bidimensionnel representant la map.
-	int		player_pos_x; // Position X du joueur sur la carte.
-	int		player_pos_y; // Position Y du joueur sur la carte.
-	void	*player;
 	void	*exit;
-	void	*collectable;
-	int		x_event;
-	int		x_mask;
+	// int		x_event;
+	// int		x_mask;
 	char	*string; // Text to write on the window.
 	char	*title_win; // Le titre de la fenetre.
 	int		x_rect;
@@ -97,6 +102,10 @@ typedef struct s_game
 	int		map_height; // Hauteur (nb de lignes)
 	int		map_width; // Largueur (nb de colonnes)
 	char	*ber;
+	void	*floor;
+	void	*col;
+	void	*wall;
+	t_player	player;
 }	t_game;
 
 
@@ -117,13 +126,13 @@ int 	check_collect(t_game *game);
 int 	check_player(t_game *game);
 int 	map_shape_error(t_game *game);
 int 	map_wall_error(t_game *game);
-int 	read_map(const char *file, t_game *game);
 int		alloc_tab(t_game *game);
 int		map_implementation(t_game *game);
 int		ft_strcmp(const char *s1, const char *s2);
-
-
-
+void	read_map(const char *file, t_game *game);
+void	alloc_map(t_game *game);
+void	fill_tab(const char *file, t_game *game);
+int		free_everything(t_game *game);
 
 
 
