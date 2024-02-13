@@ -6,7 +6,7 @@
 /*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 17:19:36 by jeza              #+#    #+#             */
-/*   Updated: 2024/02/08 14:31:52 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/13 09:03:05 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void    read_map(const char *file, t_game *game)
         if (game->map_height == 0)
             game->map_width = ft_strlen(line) - 1;
         game->map_height++;
+        free(line);
     }
     close (fd);
 }
@@ -134,33 +135,15 @@ Donc, lorsque vous allouez de la mémoire pour les "pointeurs de ligne" avec
 game->map = (char **)malloc(map_height * sizeof(char *)), cela crée un tableau de 
 map_height pointeurs, où chaque pointeur peut pointer vers le début de sa ligne respective.
 */
-void   alloc_map(t_game *game)
+void   alloc_map(t_game *game) // No need to alloc each lines, as i'll do it with strdup for each line i'll read.
 {
-    int i;
-    int j;
-
-    j = 0;
-    i = 0;
     game->map = (char **)malloc(game->map_height * sizeof(char *));
     if (game->map == NULL)
         return ;
-    while (i < game->map_height)
-    {
-        game->map[i] = (char *)malloc((game->map_width + 1) * sizeof(char));
-        if (game->map[i] == NULL)
-        {
-            while (j < i)
-            {
-                free(game->map[j]);
-                j++;
-            }
-            free(game->map);
-            return ;
-        }
-        i++;
-    }
 }
 
+// If i malloc line in alloc_map and then strdup (below) each line that i read, it'll create a variable
+// that is malloc in a function and then lost, because i malloc again each one with strdup (game->map[i]).
 void    fill_tab(const char *file, t_game *game)
 {
     int     fd;
@@ -170,10 +153,13 @@ void    fill_tab(const char *file, t_game *game)
     i = 0;
     fd = open(file, O_RDONLY);
     if (fd == -1)
+    {
+        write(1, "Error\n", 6);
         return ;
+    }
     while ((line = get_next_line(fd)))
     {
-        game->map[i] = ft_strdup(line);
+        game->map[i] = ft_strdup(line); // Je malloc chaque ligne donc pas besoin de malloc avant.
         free(line);
         i++;
     }

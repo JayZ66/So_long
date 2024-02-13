@@ -6,7 +6,7 @@
 /*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 17:19:52 by jeza              #+#    #+#             */
-/*   Updated: 2024/01/26 17:19:55 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/13 09:05:38 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,55 @@ int	ft_strcmp(const char *s1, const char *s2)
 			== (unsigned char)s2[i]))
 		i++;
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+int	error()
+{
+	write(1, "Error\n", 6);
+	return (1);
+}
+
+void	final_free_mlx(t_game *game)
+{
+	if (game->mlx != NULL)
+	{
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+	}
+}
+
+int	free_everything(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (game->map[i])
+    {
+    	free(game->map[i]);
+        i++;
+    }
+    free(game->map);
+	if (game->floor) // Each time check if the var. is activated. 
+        mlx_destroy_image(game->mlx, game->floor); // Use this function to free the image.
+    if (game->col)
+        mlx_destroy_image(game->mlx, game->col);
+    if (game->wall)
+        mlx_destroy_image(game->mlx, game->wall);
+    if (game->player.player)
+        mlx_destroy_image(game->mlx, game->player.player);
+    if (game->exit)
+        mlx_destroy_image(game->mlx, game->exit);
+    if (game->end)
+		mlx_destroy_image(game->mlx, game->end);
+	if (game->win != NULL)
+	{
+		mlx_destroy_window(game->mlx, game->win);
+		game->win = NULL;
+	}
+	// if (game->mlx != NULL)
+	// {
+	// 	mlx_destroy_display(game->mlx);
+	// 	free(game->mlx);
+	// }
+	return (0);
 }

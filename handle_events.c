@@ -6,7 +6,7 @@
 /*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:17:05 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/02/07 15:25:18 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/13 09:10:26 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,43 +29,21 @@ int	manage_keypress(int key, t_game *game)
 {
 	if (key == KEY_ESC)
 		free_everything(game);
-	// else if (key == KEY_A)
-	// else if (key == KEY_D)
-	// else if (key == KEY_DOWN)
-	// else if (key == KEY_LEFT)
-	// else if (key == KEY_RIGHT)
-	// else if (key == KEY_S)
-	// else if (key == KEY_UP)
-	// else if (key == KEY_W)
+	else if (key == KEY_A) //Left.(Q)
+		move_to_left(&game->player, game);
+	else if (key == KEY_D) // Right (D)
+		move_to_right(&game->player, game);
+	else if (key == KEY_DOWN)
+		move_down(&game->player, game);
+	else if (key == KEY_LEFT)
+		move_to_left(&game->player, game);
+	else if (key == KEY_RIGHT)
+		move_to_right(&game->player, game);
+	else if (key == KEY_UP)
+		move_up(&game->player, game);
+	else if (key == KEY_S) // Back (S)
+		move_down(&game->player, game);
+	else if (key == KEY_W) // Acancer (Z)
+		move_up(&game->player, game);
 	return (0);
 }
-
-int	free_everything(t_game *game)
-{
-	int	i;
-
-	i = 0;
-	while (game->map[i])
-    {
-    	free(game->map[i]);
-        i++;
-    }
-    free(game->map);
-	// free(game->floor);
-	// free(game->col);
-	// free(game->wall);
-	mlx_destroy_window(game->mlx, game->win);
-	game->win = NULL;
-	return (0);
-}
-
-// In order to be able to read which key is released.
-// Called each time a keypress is released.
-// int	handle_keyrelease(int keysym, void *game)
-// {
-// 	(void)game;
-// 	printf("KeyRelease: %d\n", keysym);
-// 	return (0);
-// }
-// This function will check which keyboard key is pressed and then
-// will do what's appropriate. ==> So add the others.
