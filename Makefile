@@ -1,76 +1,67 @@
-#**************************************************************************** #
-# #
-# :: : :: :: :: ::#
-#Makefile : + : : + : : + : #
-#+ : + + : + + : + #
-#By : jeza < jeza @student .42.fr> + # + + : ++# + #
-#+ #+ #+ #+ #+ #+ + #+ #
-#Created : 2024 / 01 / 18 16 : 48 : 24 by jeguerin # + # # + # #
-#Updated : 2024 / 02 / 15 14 : 36 : 47 by jeza## # ########.fr #
-# #
-#**************************************************************************** #
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/01/18 16:48:24 by jeguerin          #+#    #+#              #
+#    Updated: 2024/02/16 15:08:03 by jeguerin         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-#Nom de l'executable
-NAME : = so_long
+# Nom de l'executable
+NAME := so_long
 
-#Compilateur
-			CC : = gcc
+# Compilateur
+CC := gcc
 
-#Options de compilation
-					CFLAGS : = -Wall - Wextra - Werror -
-									Iheaders /
+# Options de compilation
+CFLAGS := -Wall -Wextra -Werror -Iheaders/
 
 #Liste des fichiers source.
-										SRCS : = main.c handle_image.c handle_events.c check_map.c handle_errors.c utils.c manage_player.c create_map.c handle_window.c GETNEXTLINE : = get_next_line
-											/ get_next_line.c get_next_line
-											/ get_next_line_utils.c LIBFT = Libft
-											/
-																																														libft.a
-#Options de la bibliotheque MiniLibX et des bibliotheques systeme
-																																															LIBRARY : =
-																																																-Lminilibx
-																																																- lmlx
-																																																- L
-																																																/ usr
-																																																/ lib
-																																																- lXext
-																																																- lX11
-																																																- lm
-																																																- lz OBJS = $(SRCS
-																																																																			:.c =.o) GETNEXTLINE_OBJ : = $(GETNEXTLINE
-																																																																											:.c =.o)
+SRCS := main.c handle_image.c handle_events.c check_map.c handle_errors.c \
+	utils.c manage_game.c create_map.c handle_window.c
+GETNEXTLINE := get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
+LIBFT = Libft/libft.a
+# Options de la bibliotheque MiniLibX et des bibliotheques systeme
+LIBRARY := -Lminilibx -lmlx -L/usr/lib -lXext -lX11 -lm -lz
+OBJS = $(SRCS:.c=.o)
+GETNEXTLINE_OBJ := $(GETNEXTLINE:.c=.o)
 
-#Regle par defaut pour l'executable
-																																																																														all : author project $(NAME)
+# Regle par defaut pour l'executable
+all: author project $(NAME)
 
-#Regles pour afficher l'auteur et le projet.
-																																																																																author : @echo "Author : jeguerin\n" project
-	: @echo "Project : So_long\n"
+# Regles pour afficher l'auteur et le projet.
+author:
+	@echo "Author : jeguerin\n"
+project:
+	@echo "Project : So_long\n"
 
-		%.o : %.c $(CC) $(CFLAGS) - c $ < -o $ @
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-																																																																												$(LIBFT)
-	: make -
-																																																																												C Libft
+$(LIBFT):
+	make -C Libft
 
-#Regle pour creer l'executable en liant les objets.
-																																																																													$(NAME)
-	: $(OBJS) $(LIBFT) $(GETNEXTLINE_OBJ) $(CC) $(CFLAGS) $(OBJS) $(LIBRARY) $(LIBFT) $(GETNEXTLINE_OBJ)
-		-
-		o $(NAME)
+# Regle pour creer l'executable en liant les objets.
+$(NAME): $(OBJS) $(LIBFT) $(GETNEXTLINE_OBJ)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBRARY) $(LIBFT) $(GETNEXTLINE_OBJ) -o $(NAME)
 
-#Regle pour nettoyer les fichiers objets.
-			clean : $(RM) $(OBJS) $(RM) $(GETNEXTLINE_OBJ) make clean -
-					C Libft
+# Regle pour nettoyer les fichiers objets.
+clean:
+	$(RM) $(OBJS)
+	$(RM) $(GETNEXTLINE_OBJ)
+	make clean -C Libft
 
-#Regle pour nettoyer les fichiers objets et l'executable.
-						fclean : clean $(RM) $(NAME) make fclean -
-								C Libft
+# Regle pour nettoyer les fichiers objets et l'executable.
+fclean: clean
+	$(RM) $(NAME)
+	make fclean -C Libft
 
-#Regle pour reconstruire le projet(clean, puis all)
-									re : author fclean all
+# Regle pour reconstruire le projet (clean, puis all)
+re: author fclean all
 
-#Declarer les regles comme des cibles.phony pour eviter des conflits avec
-#des fichiers du meme nom.
-
-											.PHONY : all clean fclean re
+# Declarer les regles comme des cibles .phony pour eviter des conflits avec
+# des fichiers du meme nom.
+.PHONY: all clean fclean re

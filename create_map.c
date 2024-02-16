@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:40:12 by jeza              #+#    #+#             */
-/*   Updated: 2024/02/15 14:34:39 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/16 13:14:38 by jeguerin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,11 @@ void	read_map(const char *file, t_game *game)
 		write(1, "Error\n", 6);
 		return ;
 	}
-	while ((line = get_next_line(fd)))
+	while (1)
 	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break ;
 		if (game->map_height == 0)
 			game->map_width = ft_strlen(line) - 1;
 		game->map_height++;
@@ -43,39 +46,15 @@ void	read_map(const char *file, t_game *game)
 	close(fd);
 }
 
-/*
-La première allocation est faite pour l'ensemble du tableau (les pointeurs de ligne),
-et ensuite, dans la boucle, chaque ligne individuelle est allouée.
-Cela crée un tableau de tableaux.
-
-Voici une explication plus détaillée :
-
-game->map : C'est un pointeur de pointeur (char **).
-Il pointe vers le début du tableau de pointeurs.
-
-game->map[i] : C'est un pointeur (char *). Chaque élément game->map[i] pointe vers
-le début de la ligne i du tableau bidimensionnel.
-
-Donc, lorsque vous allouez de la mémoire pour les "pointeurs de ligne" avec
-game->map = (char **)malloc(map_height * sizeof(char *)),
-	cela crée un tableau de
-map_height pointeurs,
-	où chaque pointeur peut pointer vers le début de sa ligne respective.
-*/
-void	alloc_map(t_game *game) // No need to alloc each lines,
-	as i 'll do it with strdup for each line i' ll read.
+void	alloc_map(t_game *game)
 {
-	game->map = (char **)malloc((game->map_height + 1) * sizeof(char *)); //
-	+1 to add the NULL character.if (game->map == NULL) return ;
+	game->map = (char **)malloc((game->map_height + 1) * sizeof(char *));
+	if (game->map == NULL)
+		return ;
 	game->map[game->map_height] = NULL;
-	// To initialize the end of the map (otherwise invalid read of size).
 }
 
-// If i malloc line in alloc_map and then strdup (below) each line that i read,
-it'll create a variable
-	// that is malloc in a function and then lost,
-	because i malloc again each one with strdup(game->map[i])
-		.void fill_tab(const char *file, t_game *game)
+void	fill_tab(const char *file, t_game *game)
 {
 	int		fd;
 	char	*line;
@@ -88,10 +67,12 @@ it'll create a variable
 		write(1, "Error\n", 6);
 		return ;
 	}
-	while ((line = get_next_line(fd)))
+	while (1)
 	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break ;
 		game->map[i] = ft_strdup(line);
-		// Je malloc chaque ligne donc pas besoin de malloc avant.
 		free(line);
 		i++;
 	}

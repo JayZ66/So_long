@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 17:19:52 by jeza              #+#    #+#             */
-/*   Updated: 2024/02/15 14:44:34 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/16 14:57:06 by jeguerin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,10 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-int	free_everything(t_game *game)
+void	free_image(t_game *game)
 {
-	int i;
-
-	i = 0;
-	while (game->map[i])
-	{
-		free(game->map[i]);
-		i++;
-	}
-	free(game->map);
-	free(game->ber);
-	if (game->floor)                              
-		// Each time check if the var. is activated.
+	if (game->floor)
 		mlx_destroy_image(game->mlx, game->floor);
-			// Use this function to free each image.
 	if (game->col)
 		mlx_destroy_image(game->mlx, game->col);
 	if (game->wall)
@@ -49,6 +37,21 @@ int	free_everything(t_game *game)
 		mlx_destroy_image(game->mlx, game->exit);
 	if (game->end)
 		mlx_destroy_image(game->mlx, game->end);
+}
+
+int	free_everything(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (game->map[i])
+	{
+		free(game->map[i]);
+		i++;
+	}
+	free(game->map);
+	free(game->ber);
+	free_image(game);
 	if (game->win != NULL)
 	{
 		mlx_destroy_window(game->mlx, game->win);

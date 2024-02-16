@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 17:28:45 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/02/15 15:44:53 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/16 12:15:49 by jeguerin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,17 @@ int	main(int argc, char **argv)
 {
 	t_game	game;
 
-	// if (game == NULL)
-	// 	return (1);
 	if (argc != 2)
 	{
 		write(1, "Error\n", 6);
 		return (1);
 	}
 	game.ber = ft_strdup(argv[1]);
-		// Pass the filename as a command-line argument
 	if (game.ber == NULL)
 		return (1);
 	game.mlx = NULL;
 	if (map_implementation(&game) == 0)
 		create_window(&game);
-	// free(game.ber);
 	return (0);
 }
 

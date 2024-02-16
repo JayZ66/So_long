@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_window.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:36:03 by jeza              #+#    #+#             */
-/*   Updated: 2024/02/15 14:36:37 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/16 15:09:54 by jeguerin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	fill_window(t_game *game)
 	int	j;
 
 	i = 0;
-	j = 0;
 	while (game->map[i])
 	{
 		j = 0;
@@ -48,7 +47,6 @@ void	fill_window(t_game *game)
 void	create_window(t_game *game)
 {
 	game->mlx = mlx_init();
-		// This function creates a struct. all the stuff we'll need in the MLX. Return the address of his struct.
 	if (game->mlx == NULL)
 		return ;
 	game->win = mlx_new_window(game->mlx, game->map_width * 32, game->map_height
@@ -61,10 +59,7 @@ void	create_window(t_game *game)
 	game->step_count = 0;
 	init_imgs(game);
 	fill_window(game);
-	// mlx_loop_hook(game->mlx, &handle_no_event, game);
-		// Needed to properly close the win. + To manage ennemies mooves.
 	mlx_hook(game->win, KeyPress, KeyPressMask, &manage_keypress, game);
-		// Use it just once to manage all keypress.
 	mlx_hook(game->win, 17, KeyPressMask, &free_everything, game);
-	mlx_loop(game->mlx); // Waiting for events like keyboard, etc.
+	mlx_loop(game->mlx);
 }

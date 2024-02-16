@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:48:48 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/02/15 15:41:23 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/16 14:56:47 by jeguerin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,6 @@
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
 
-# define BLACK 0 << 16 | 0 << 8 | 0
-# define RED 255 << 16 | 0 << 8 | 0
-# define GREEN 0 << 16 | 255 << 8 | 0
-# define WHITE 255 << 16 | 255 << 8 | 255
-# define BLUE 0 << 16 | 0 << 8 | 255
-# define YELLOW 255 << 16 | 255 << 8 | 0
-# define MAGENTA 255 << 16 | 0 << 8 | 255
-# define CYAN 0 << 16 | 255 << 8 | 255
-
 # define KEY_ESC 65307
 # define KEY_UP 65362
 # define KEY_DOWN 65364
@@ -50,22 +41,12 @@
 # define SZ 32
 # define ON_DESTROY 17
 
-// # define BLACK 0xFF000000
-// # define RED 0xFFFF0000
-// # define GREEN 0xFF00FF00
-// # define BLUE 0xFF0000FF
-// # define WHITE 0xFFFFFFFF
+# define BLACK 0xFF000000
+# define RED 0xFFFF0000
+# define GREEN 0xFF00FF00
+# define BLUE 0xFF0000FF
+# define WHITE 0xFFFFFFFF
 
-// typedef struct	s_img {
-// 	void	*img;
-// 	char	*addr;
-// 	int		bits_per_pixel;
-// 	int		line_length;
-// 	int		endian;
-// }				t_img;
-// Revoir le code (a adapter) pour creer cette sous-structure.
-
-// Use this struct. for each position (col, player, etc.)
 typedef struct s_axe
 {
 	int			x;
@@ -80,19 +61,17 @@ typedef struct s_player
 
 typedef struct s_game
 {
-	void *mlx;  // Pointeur vers l'instance MLX.
-	void *win;  // Pointeur vers la fenetre.
-	char **map; // Tableau bidimensionnel representant la map.
+	void		*mlx;
+	void		*win;
+	char		**map;
 	void		*exit;
-	// int		x_event;
-	// int		x_mask;
-	char *string; // Text to write on the window.
+	char		*string;
 	int			x_rect;
 	int			y_rect;
-	void *image; // Un pointeur vers l'image dont on veut obtenir l'add. mem.
+	void		*image;
 	int			color;
-	int map_height; // Hauteur (nb de lignes)
-	int map_width;  // Largueur (nb de colonnes)
+	int			map_height;
+	int			map_width;
 	char		*ber;
 	void		*floor;
 	void		*col;
@@ -142,5 +121,6 @@ void			display_steps(int x, int y, t_game *game);
 int				ft_strcmp(const char *s1, const char *s2);
 int				free_everything(t_game *game);
 int				check_file_error(t_game *game);
+void			free_image(t_game *game);
 
 #endif

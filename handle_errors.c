@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 17:19:36 by jeza              #+#    #+#             */
-/*   Updated: 2024/02/15 13:43:28 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/16 11:07:00 by jeguerin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	map_shape_error(t_game *game)
 
 	i = 0;
 	first_line_length = ft_strlen(game->map[0]);
-	while (game->map[i]) // Voir si correspond bien à y (coord.)
+	while (game->map[i])
 	{
 		if (ft_strlen(game->map[i]) != first_line_length)
 		{
