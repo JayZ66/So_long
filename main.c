@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 17:28:45 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/02/16 12:15:49 by jeguerin         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:49:04 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ int	main(int argc, char **argv)
 	t_game	game;
 
 	if (argc != 2)
-	{
-		write(1, "Error\n", 6);
-		return (1);
-	}
+		return (write(1, "Error\n", 6), 1);
 	game.ber = ft_strdup(argv[1]);
 	if (game.ber == NULL)
 		return (1);
-	game.mlx = NULL;
+	game.mlx = mlx_init();
+	mlx_loop(game.mlx);
+	game.win = NULL;
+	init_imgs(&game);
 	if (map_implementation(&game) == 0)
 		create_window(&game);
 	return (0);

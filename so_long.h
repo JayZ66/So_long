@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:48:48 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/02/16 14:56:47 by jeguerin         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:50:59 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-
-# define MLX_ERROR 1
-# define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1080
 
 # define KEY_ESC 65307
 # define KEY_UP 65362
@@ -64,12 +60,9 @@ typedef struct s_game
 	void		*mlx;
 	void		*win;
 	char		**map;
-	void		*exit;
 	char		*string;
-	int			x_rect;
-	int			y_rect;
+	void		*exit;
 	void		*image;
-	int			color;
 	int			map_height;
 	int			map_width;
 	char		*ber;
@@ -79,6 +72,8 @@ typedef struct s_game
 	void		*end;
 	size_t		collect_count;
 	size_t		step_count;
+	size_t		check_collect;
+	int			check_exit;
 	t_player	player;
 }				t_game;
 
@@ -93,6 +88,7 @@ void			fill_tab(const char *file, t_game *game);
 // Create images & win.
 void			create_window(t_game *game);
 void			init_imgs(t_game *game);
+void			fill_window(t_game *game, int i, int j);
 
 // Manage events.
 int				handle_no_event(void *game);
@@ -116,6 +112,7 @@ void			move_down(t_player *player, t_game *game);
 void			check_path(int x, int y, t_game *game, t_player *player);
 void			handle_end_of_game(int x, int y, t_game *game);
 void			display_steps(int x, int y, t_game *game);
+void			flood_fill(t_game *game, char **map, int x, int y);
 
 // Utils.
 int				ft_strcmp(const char *s1, const char *s2);

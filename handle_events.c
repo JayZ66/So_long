@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_events.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:17:05 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/02/16 13:45:15 by jeguerin         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:12:28 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ char	**fill_map_temp(t_game *game, const char *file)
 	line = NULL;
 	map_temp = (char **)malloc((game->map_height + 1) * sizeof(char *));
 	if (map_temp == NULL)
-		return (write(1, "Error\n", 6), NULL);
+		return (write(1, "Error 9\n", 8), NULL);
 	map_temp[game->map_height] = NULL;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return (write(1, "Error\n", 6), NULL);
+		return (write(1, "Error 10\n", 9), NULL);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -76,44 +76,45 @@ void	fill_path_map(t_game *game, t_player *player, const char *file)
 	int		i;
 
 	(void)player;
-	i = 0;
+	i = -1;
+	game->check_collect = 0;
+	game->check_exit = 0;
 	map_temp = fill_map_temp(game, file);
-	while (map_temp[i])
+	flood_fill(game, map_temp, player->p_pos.x, player->p_pos.y);
+	if (game->check_collect != game->collect_count || game->check_exit == 0)
 	{
-		free(map_temp[i]);
-		i++;
+		write(1, "Error 12\n", 9);
+		while (map_temp[++i])
+			free(map_temp[i]);
+		free(map_temp);
+		free_everything(game);
+		exit (0);
 	}
+	while (map_temp[++i])
+		free(map_temp[i]);
 	free(map_temp);
 }
 
-// void	flood_fill(t_game *game, int x, int y)
-// {
-// 	map_temp[player->p_pos.y][player->p_pos.x] = 'X';
-// 	if (x > 0 && map_temp[y][x - 1] == '0')
-// 		flood_fill(game, x - 1, y);
-// 	if (x <= game->map_width - 1 && map_temp[y][x + 1] == '0')
-// 		flood_fill(game, x + 1, y);
-// 	if (y > 0 && map_temp[y - 1][x] == '0')
-// 		flood_fill(game, x, y - 1);
-// 	if (y <= game->map_width - 1 && map_temp[y + 1][x] == '0')
-// 		flood_fill(game, x, y + 1);
-// }
-
-// void	flood_fill(t_game *game, int x, int y)
-// {
-// 	char	*current;
-
-// 	current = map_temp[y][x];
-// 	if (x <= 0 || y <= 0 || x > game->map_width || y > game->map_height)
-// 		return ;
-// 	if (current == '1' || current == 'X')
-// 		return ;
-// 	map_temp[y][x] = 'X';
-// 	if (current == 'C')
-// 		game->collect_count--;
-// 	// if (current == 'E')
-// 	flood_fill(game, x - 1, y);
-// 	flood_fill(game, x + 1, y);
-// 	flood_fill(game, x, y - 1);
-// 	flood_fill(game, x, y + 1);
-// }
+void	flood_fill(t_game *game, char **map, int x, int y)
+{
+	if (x <= 0 || y <= 0 || x > game->map_width || y > game->map_height)
+		return ;
+	if (map[y][x] == '1' || map[y][x] == 'X' || map[y][x] == 'E'
+	|| map[y][x] == 'V')
+	{
+		if (map[y][x] == 'E')
+		{
+			game->check_exit = 1;
+			map[y][x] = 'V';
+		}
+		return ;
+	}
+	if (map[y][x] == 'C')
+		game->check_collect++;
+	if (map[y][x] != 'V')
+		map[y][x] = 'X';
+	flood_fill(game, map, x - 1, y);
+	flood_fill(game, map, x + 1, y);
+	flood_fill(game, map, x, y - 1);
+	flood_fill(game, map, x, y + 1);
+}

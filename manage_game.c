@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_game.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 10:52:44 by jeza              #+#    #+#             */
-/*   Updated: 2024/02/16 15:09:54 by jeguerin         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:12:51 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,6 @@ void	display_steps(int x, int y, t_game *game)
 	{
 		mlx_put_image_to_window(game->mlx, game->win, game->wall, 95, 0);
 		mlx_string_put(game->mlx, game->win, 10, 15, WHITE, "Nombre de pas : ");
-		mlx_string_put(game->mlx, game->win, 115, 15, WHITE, game->string);
+		mlx_string_put(game->mlx, game->win, 105, 15, WHITE, game->string);
 	}
 }

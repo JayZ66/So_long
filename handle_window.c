@@ -3,21 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   handle_window.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:36:03 by jeza              #+#    #+#             */
-/*   Updated: 2024/02/16 15:09:54 by jeguerin         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:43:57 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	fill_window(t_game *game)
+void	fill_window(t_game *game, int i, int j)
 {
-	int	i;
-	int	j;
-
-	i = 0;
 	while (game->map[i])
 	{
 		j = 0;
@@ -46,7 +42,6 @@ void	fill_window(t_game *game)
 
 void	create_window(t_game *game)
 {
-	game->mlx = mlx_init();
 	if (game->mlx == NULL)
 		return ;
 	game->win = mlx_new_window(game->mlx, game->map_width * 32, game->map_height
@@ -57,8 +52,7 @@ void	create_window(t_game *game)
 		return ;
 	}
 	game->step_count = 0;
-	init_imgs(game);
-	fill_window(game);
+	fill_window(game, 0, 0);
 	mlx_hook(game->win, KeyPress, KeyPressMask, &manage_keypress, game);
 	mlx_hook(game->win, 17, KeyPressMask, &free_everything, game);
 	mlx_loop(game->mlx);
