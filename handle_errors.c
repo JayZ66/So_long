@@ -6,7 +6,7 @@
 /*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 17:19:36 by jeza              #+#    #+#             */
-/*   Updated: 2024/02/13 09:03:05 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/15 13:43:28 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,118 +50,19 @@ int map_wall_error(t_game *game)
     return (0);
 }
 
-// int read_map(const char *file, t_game *game)
-// {
-//     int     fd;
-//     char    *line;
-//     int     i;
-
-//     i = 0;
-//     game->map_height = 0; // To get the nb of lines.
-//     game->map_width = 0; // To get the number of rows.
-//     fd = open(file, O_RDONLY);
-//     if (fd == -1)
-//     {
-//         write(1, "Error\n", 6);
-//         return (1);
-//     }
-//     while ((line = get_next_line(fd)))
-//     {
-//         if (game->map_height == 0) // Mise à jour de la largeur de la map si c'est la première ligne lue.
-//             game->map_width = ft_strlen(line) + 1;
-//         game->map[i] = ft_strdup(line); // Check if i s'incrémente après le 1er tour ?
-//         game->map_height++;
-//         free(line);
-//         i++;
-//     }
-//     close (fd);
-//     return (0);
-// }
-
-
-// Will check the path taken by the player, and will put 'x' when the player has passed on it.
-// With floodfill.
-// int check_path(t_game *game)
-// {
-//     char    **temp_map;
-
-//     temp_map = game->map;
-// }
-
-/*
-3 étapes : 
-- D'abord je lis.
-- Je malloc mon tab. puis chaque ligne.
-- Je relis pour ensuite mettre dans mon double tab. qui est malloc.
-*/
-
-void    read_map(const char *file, t_game *game)
+int check_file_error(t_game *game)
 {
-    int     fd;
-    char    *line;
+    int size_string;
+    int size_ber;
+    int start_position;
 
-    game->map_height = 0;
-    game->map_width = 0;
-    fd = open(file, O_RDONLY);
-    if (fd == -1)
+    size_string = ft_strlen(game->ber);
+    size_ber = ft_strlen(".ber");
+    start_position = size_string - size_ber;
+    if (start_position < 0 || ft_strcmp(game->ber + start_position, ".ber") != 0)
     {
-        write(1, "Error\n", 6);
-        return ;
+        write(1, "Error file\n", 11);
+        return (1);
     }
-    while ((line = get_next_line(fd)))
-    {
-        if (game->map_height == 0)
-            game->map_width = ft_strlen(line) - 1;
-        game->map_height++;
-        free(line);
-    }
-    close (fd);
-}
-
-/*
-La première allocation est faite pour l'ensemble du tableau (les pointeurs de ligne), 
-et ensuite, dans la boucle, chaque ligne individuelle est allouée. 
-Cela crée un tableau de tableaux.
-
-Voici une explication plus détaillée :
-
-game->map : C'est un pointeur de pointeur (char **). 
-Il pointe vers le début du tableau de pointeurs.
-
-game->map[i] : C'est un pointeur (char *). Chaque élément game->map[i] pointe vers 
-le début de la ligne i du tableau bidimensionnel.
-
-Donc, lorsque vous allouez de la mémoire pour les "pointeurs de ligne" avec 
-game->map = (char **)malloc(map_height * sizeof(char *)), cela crée un tableau de 
-map_height pointeurs, où chaque pointeur peut pointer vers le début de sa ligne respective.
-*/
-void   alloc_map(t_game *game) // No need to alloc each lines, as i'll do it with strdup for each line i'll read.
-{
-    game->map = (char **)malloc(game->map_height * sizeof(char *));
-    if (game->map == NULL)
-        return ;
-}
-
-// If i malloc line in alloc_map and then strdup (below) each line that i read, it'll create a variable
-// that is malloc in a function and then lost, because i malloc again each one with strdup (game->map[i]).
-void    fill_tab(const char *file, t_game *game)
-{
-    int     fd;
-    char    *line;
-    int     i;
-
-    i = 0;
-    fd = open(file, O_RDONLY);
-    if (fd == -1)
-    {
-        write(1, "Error\n", 6);
-        return ;
-    }
-    while ((line = get_next_line(fd)))
-    {
-        game->map[i] = ft_strdup(line); // Je malloc chaque ligne donc pas besoin de malloc avant.
-        free(line);
-        i++;
-    }
-    close (fd);
+    return (0);
 }

@@ -6,12 +6,11 @@
 /*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:42:25 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/02/13 09:07:26 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/15 14:35:03 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
 
 // The aim of this function is to create and open a window.
 // I'm giving my structure in parameters to get the win var. and set up

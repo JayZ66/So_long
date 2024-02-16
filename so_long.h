@@ -6,7 +6,7 @@
 /*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:48:48 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/02/13 09:29:45 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/15 15:41:23 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_game
 // Creation map.
 int		alloc_tab(t_game *game);
 int		map_implementation(t_game *game);
+int		map_implementation2(t_game *game);
 void	read_map(const char *file, t_game *game);
 void	alloc_map(t_game *game);
 void	fill_tab(const char *file, t_game *game);
@@ -124,6 +125,8 @@ int 	check_player(t_game *game);
 int 	map_shape_error(t_game *game);
 int 	map_wall_error(t_game *game);
 int 	error_map(t_game *game);
+char	**fill_map_temp(t_game *game, const char *file);
+void	fill_path_map(t_game *game, t_player *player, const char *file);
 
 // Manage moves & player.
 void    move_to_left(t_player *player, t_game *game);
@@ -137,7 +140,6 @@ void    display_steps(int x, int y, t_game *game);
 // Utils.
 int		ft_strcmp(const char *s1, const char *s2);
 int		free_everything(t_game *game);
-void	final_free_mlx(t_game *game);
-int		error();
+int 	check_file_error(t_game *game);
 
 #endif

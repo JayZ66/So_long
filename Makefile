@@ -6,7 +6,7 @@
 #    By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 16:48:24 by jeguerin          #+#    #+#              #
-#    Updated: 2024/02/08 15:43:58 by jeza             ###   ########.fr        #
+#    Updated: 2024/02/15 14:36:47 by jeza             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ CC := gcc
 CFLAGS := -Wall -Wextra -Werror -Iheaders/
 
 #Liste des fichiers source.
-SRCS := main.c handle_image.c handle_events.c check_map.c handle_errors.c utils.c manage_player.c
+SRCS := main.c handle_image.c handle_events.c check_map.c handle_errors.c \
+		utils.c manage_player.c create_map.c handle_window.c
 GETNEXTLINE := get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 LIBFT = Libft/libft.a
 # Options de la bibliotheque MiniLibX et des bibliotheques systeme

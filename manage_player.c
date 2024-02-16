@@ -6,7 +6,7 @@
 /*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 10:52:44 by jeza              #+#    #+#             */
-/*   Updated: 2024/02/12 18:38:27 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/15 13:39:25 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void    display_steps(int x, int y, t_game *game)
     game->string = ft_itoa(game->step_count);
     if (game->map[y][x] != 'E' && game->collect_count != 0)
     {
-        mlx_put_image_to_window(game->mlx, game->win, game->floor, 130, 32);
-        mlx_string_put(game->mlx, game->win, 38, 50, BLACK, "Nombre de pas : ");
-        mlx_string_put(game->mlx, game->win, 140, 50, BLACK, game->string);
+        mlx_put_image_to_window(game->mlx, game->win, game->wall, 95, 0);
+        mlx_string_put(game->mlx, game->win, 10, 15, WHITE, "Nombre de pas : ");
+        mlx_string_put(game->mlx, game->win, 115, 15, WHITE, game->string);
     }
 }
 
@@ -30,10 +30,8 @@ void    handle_end_of_game(int  x, int y, t_game *game)
         if (game->collect_count == 0)
         {
             mlx_string_put(game->mlx, game->win, 200, 50, BLACK, "Felicitations ! Vous avez termine le jeu.");
-            free(game->string);
+            free_everything(game);
         }
-        // else
-        //     mlx_put_image_to_window(game->mlx, game->win, game->exit, x * 32, y * 32);
     }
 }
 

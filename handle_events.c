@@ -6,7 +6,7 @@
 /*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:17:05 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/02/13 09:10:26 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/15 19:56:22 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,97 @@ int	manage_keypress(int key, t_game *game)
 	else if (key == KEY_W) // Acancer (Z)
 		move_up(&game->player, game);
 	return (0);
+}
+
+// Floodfill : 
+// Param : Map + position perso du debut.
+
+char	**fill_map_temp(t_game *game, const char *file)
+{
+	char	**map_temp;
+	char	*line;
+	int		i;
+	int		fd;
+
+	i = 0;
+	map_temp = (char **)malloc((game->map_height + 1) * sizeof(char *));
+	if (map_temp == NULL)
+		return(write(1, "Error\n", 6), NULL);
+	map_temp[game->map_height] = NULL;
+	fd = open(file, O_RDONLY);
+    if (fd == -1)
+        return(write(1, "Error\n", 6), NULL);
+    while ((line = get_next_line(fd)))
+    {
+        map_temp[i] = ft_strdup(line); // Je malloc chaque ligne donc pas besoin de malloc avant.
+        free(line);
+        i++;
+    }
+    close (fd);
+	return (map_temp);
+}
+
+void	fill_path_map(t_game *game, t_player *player, const char *file)
+{
+	char	**map_temp;
+	int		i;
+
+	(void)player;
+	i = 0;
+	map_temp = fill_map_temp(game, file);
+	while (map_temp[i])
+	{
+		free(map_temp[i]);
+		i++;
+	}
+	free(map_temp);	
+}
+
+/*
+- First, réaliser la vérification en haut :
+1. Tu initialises la "new" position (y - 1)
+2. Check si sup./égal à 0, si 
+- Vérification en bas
+- Vérification à gauche
+- Vérification à droite
+*/
+void	flood_fill(t_game *game, int x, int y)
+{
+	map_temp[player->p_pos.y][player->p_pos.x] = 'X';
+	// gauche
+	if (x > 0 && map_temp[y][x - 1] == '0')
+		flood_fill(game, x - 1, y);
+	// droite
+	if (x <= game->map_width - 1 && map_temp[y][x + 1] == '0')
+		flood_fill(game, x + 1, y);
+	// monter
+	if (y > 0 && map_temp[y - 1][x] == '0')
+		flood_fill(game, x, y - 1);
+	// Descendre
+	if (y <= game->map_width - 1 && map_temp[y + 1][x] == '0')
+		flood_fill(game, x, y + 1);
+}
+
+void	flood_fill(t_game *game, int x, int y)
+{
+	char	*current;
+
+	current = map_temp[y][x];
+	if (x <= 0 || y <= 0 || x > game->map_width || y > game->map_height)
+		return ;
+	if (current == '1' || current = 'X')
+		return ;
+	map_temp[y][x] = 'X';
+	if (current == 'C')
+		game->collect_count--;
+	// Mettre du coup X aussi non ?
+	if (current == 'E')
+	// gauche
+	flood_fill(game, x - 1, y);
+	// droite
+	flood_fill(game, x + 1, y);
+	// monter
+	flood_fill(game, x, y - 1);
+	// Descendre
+	flood_fill(game, x, y + 1);
 }

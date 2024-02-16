@@ -6,7 +6,7 @@
 /*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 17:19:52 by jeza              #+#    #+#             */
-/*   Updated: 2024/02/13 09:05:38 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/15 14:44:34 by jeza             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,6 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-int	error()
-{
-	write(1, "Error\n", 6);
-	return (1);
-}
-
-void	final_free_mlx(t_game *game)
-{
-	if (game->mlx != NULL)
-	{
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
-	}
-}
-
 int	free_everything(t_game *game)
 {
 	int	i;
@@ -49,8 +34,9 @@ int	free_everything(t_game *game)
         i++;
     }
     free(game->map);
+	free(game->ber);
 	if (game->floor) // Each time check if the var. is activated. 
-        mlx_destroy_image(game->mlx, game->floor); // Use this function to free the image.
+        mlx_destroy_image(game->mlx, game->floor); // Use this function to free each image.
     if (game->col)
         mlx_destroy_image(game->mlx, game->col);
     if (game->wall)
@@ -66,10 +52,11 @@ int	free_everything(t_game *game)
 		mlx_destroy_window(game->mlx, game->win);
 		game->win = NULL;
 	}
-	// if (game->mlx != NULL)
-	// {
-	// 	mlx_destroy_display(game->mlx);
-	// 	free(game->mlx);
-	// }
+	if (game->mlx != NULL)
+	{
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+		exit (0);
+	}
 	return (0);
 }
