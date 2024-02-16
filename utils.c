@@ -17,35 +17,37 @@ int	ft_strcmp(const char *s1, const char *s2)
 	size_t	i;
 
 	i = 0;
-	while ((unsigned char)s1[i] && ((unsigned char)s1[i]
-			== (unsigned char)s2[i]))
+	while ((unsigned char)s1[i]
+		&& ((unsigned char)s1[i] == (unsigned char)s2[i]))
 		i++;
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
 int	free_everything(t_game *game)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (game->map[i])
-    {
-    	free(game->map[i]);
-        i++;
-    }
-    free(game->map);
+	{
+		free(game->map[i]);
+		i++;
+	}
+	free(game->map);
 	free(game->ber);
-	if (game->floor) // Each time check if the var. is activated. 
-        mlx_destroy_image(game->mlx, game->floor); // Use this function to free each image.
-    if (game->col)
-        mlx_destroy_image(game->mlx, game->col);
-    if (game->wall)
-        mlx_destroy_image(game->mlx, game->wall);
-    if (game->player.player)
-        mlx_destroy_image(game->mlx, game->player.player);
-    if (game->exit)
-        mlx_destroy_image(game->mlx, game->exit);
-    if (game->end)
+	if (game->floor)                              
+		// Each time check if the var. is activated.
+		mlx_destroy_image(game->mlx, game->floor);
+			// Use this function to free each image.
+	if (game->col)
+		mlx_destroy_image(game->mlx, game->col);
+	if (game->wall)
+		mlx_destroy_image(game->mlx, game->wall);
+	if (game->player.player)
+		mlx_destroy_image(game->mlx, game->player.player);
+	if (game->exit)
+		mlx_destroy_image(game->mlx, game->exit);
+	if (game->end)
 		mlx_destroy_image(game->mlx, game->end);
 	if (game->win != NULL)
 	{
@@ -56,7 +58,7 @@ int	free_everything(t_game *game)
 	{
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
-		exit (0);
+		exit(0);
 	}
 	return (0);
 }

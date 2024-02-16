@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-//hook qui est déclenché lorsqu'il n'y a aucun événement traité.
+// hook qui est déclenché lorsqu'il n'y a aucun événement traité.
 // Il est particulièrement utile pour dessiner continuellement des choses à
 // l'écran, même si nous n'en avions pas vraiment besoin dans notre exemple.
 int	handle_no_event(void *game)
@@ -29,7 +29,7 @@ int	manage_keypress(int key, t_game *game)
 {
 	if (key == KEY_ESC)
 		free_everything(game);
-	else if (key == KEY_A) //Left.(Q)
+	else if (key == KEY_A) // Left.(Q)
 		move_to_left(&game->player, game);
 	else if (key == KEY_D) // Right (D)
 		move_to_right(&game->player, game);
@@ -48,7 +48,7 @@ int	manage_keypress(int key, t_game *game)
 	return (0);
 }
 
-// Floodfill : 
+// Floodfill :
 // Param : Map + position perso du debut.
 
 char	**fill_map_temp(t_game *game, const char *file)
@@ -61,18 +61,19 @@ char	**fill_map_temp(t_game *game, const char *file)
 	i = 0;
 	map_temp = (char **)malloc((game->map_height + 1) * sizeof(char *));
 	if (map_temp == NULL)
-		return(write(1, "Error\n", 6), NULL);
+		return (write(1, "Error\n", 6), NULL);
 	map_temp[game->map_height] = NULL;
 	fd = open(file, O_RDONLY);
-    if (fd == -1)
-        return(write(1, "Error\n", 6), NULL);
-    while ((line = get_next_line(fd)))
-    {
-        map_temp[i] = ft_strdup(line); // Je malloc chaque ligne donc pas besoin de malloc avant.
-        free(line);
-        i++;
-    }
-    close (fd);
+	if (fd == -1)
+		return (write(1, "Error\n", 6), NULL);
+	while ((line = get_next_line(fd)))
+	{
+		map_temp[i] = ft_strdup(line);
+			// Je malloc chaque ligne donc pas besoin de malloc avant.
+		free(line);
+		i++;
+	}
+	close(fd);
 	return (map_temp);
 }
 
@@ -89,13 +90,13 @@ void	fill_path_map(t_game *game, t_player *player, const char *file)
 		free(map_temp[i]);
 		i++;
 	}
-	free(map_temp);	
+	free(map_temp);
 }
 
 /*
 - First, réaliser la vérification en haut :
 1. Tu initialises la "new" position (y - 1)
-2. Check si sup./égal à 0, si 
+2. Check si sup./égal à 0, si
 - Vérification en bas
 - Vérification à gauche
 - Vérification à droite
@@ -119,7 +120,7 @@ void	flood_fill(t_game *game, int x, int y)
 
 void	flood_fill(t_game *game, int x, int y)
 {
-	char	*current;
+	char *current;
 
 	current = map_temp[y][x];
 	if (x <= 0 || y <= 0 || x > game->map_width || y > game->map_height)
@@ -131,8 +132,8 @@ void	flood_fill(t_game *game, int x, int y)
 		game->collect_count--;
 	// Mettre du coup X aussi non ?
 	if (current == 'E')
-	// gauche
-	flood_fill(game, x - 1, y);
+		// gauche
+		flood_fill(game, x - 1, y);
 	// droite
 	flood_fill(game, x + 1, y);
 	// monter

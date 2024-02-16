@@ -27,11 +27,16 @@ void	init_imgs(t_game *game)
 
 	size = 32;
 	size_end = 100;
-	game->floor = mlx_xpm_file_to_image(game->mlx, "sprites/Floor3.xpm", &size, &size);
-	game->col = mlx_xpm_file_to_image(game->mlx, "sprites/gay_bag.xpm", &size, &size);
-	game->wall = mlx_xpm_file_to_image(game->mlx, "sprites/Wall.xpm", &size, &size);
-	game->player.player = mlx_xpm_file_to_image(game->mlx, "sprites/Player1.xpm", &size, &size);
-	game->exit = mlx_xpm_file_to_image(game->mlx, "sprites/Floor1.xpm", &size, &size);
-	game->end = mlx_xpm_file_to_image(game->mlx, "sprites/Winner_win", &size_end, &size_end);
-
+	game->floor = mlx_xpm_file_to_image(game->mlx, "sprites/Floor3.xpm", &size,
+			&size);
+	game->col = mlx_xpm_file_to_image(game->mlx, "sprites/gay_bag.xpm", &size,
+			&size);
+	game->wall = mlx_xpm_file_to_image(game->mlx, "sprites/Wall.xpm", &size,
+			&size);
+	game->player.player = mlx_xpm_file_to_image(game->mlx,
+			"sprites/Player1.xpm", &size, &size);
+	game->exit = mlx_xpm_file_to_image(game->mlx, "sprites/Floor1.xpm", &size,
+			&size);
+	game->end = mlx_xpm_file_to_image(game->mlx, "sprites/Winner_win",
+			&size_end, &size_end);
 }
