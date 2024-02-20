@@ -27,7 +27,7 @@ char	*ft_strdup(const char *s)
 	while (s[i])
 	{
 		dest[i] = s[i];
-		if (dest[i] == '\n')
+		if (dest[i] == 13)
 			dest[i] = '\0';
 		i++;
 	}

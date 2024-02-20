@@ -3,40 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   handle_events.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:17:05 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/02/16 18:12:28 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/19 17:44:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	handle_no_event(void *game)
-{
-	(void)game;
-	return (0);
-}
+// int	handle_no_event(void *game)
+// {
+// 	(void)game;
+// 	return (0);
+// }
 
 int	manage_keypress(int key, t_game *game)
 {
 	if (key == KEY_ESC)
 		free_everything(game);
-	else if (key == KEY_A)
+	else if (key == KEY_A || key == KEY_LEFT)
 		move_to_left(&game->player, game);
-	else if (key == KEY_D)
+	else if (key == KEY_D || key == KEY_RIGHT)
 		move_to_right(&game->player, game);
-	else if (key == KEY_DOWN)
+	else if (key == KEY_DOWN || key == KEY_S)
 		move_down(&game->player, game);
-	else if (key == KEY_LEFT)
-		move_to_left(&game->player, game);
-	else if (key == KEY_RIGHT)
-		move_to_right(&game->player, game);
-	else if (key == KEY_UP)
-		move_up(&game->player, game);
-	else if (key == KEY_S)
-		move_down(&game->player, game);
-	else if (key == KEY_W)
+	else if (key == KEY_UP || key == KEY_W)
 		move_up(&game->player, game);
 	return (0);
 }
@@ -52,11 +44,11 @@ char	**fill_map_temp(t_game *game, const char *file)
 	line = NULL;
 	map_temp = (char **)malloc((game->map_height + 1) * sizeof(char *));
 	if (map_temp == NULL)
-		return (write(1, "Error 9\n", 8), NULL);
+		return (write(1, "Error map_temp\n", 15), NULL);
 	map_temp[game->map_height] = NULL;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return (write(1, "Error 10\n", 9), NULL);
+		return (write(1, "Error fd\n", 9), NULL);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -83,7 +75,7 @@ void	fill_path_map(t_game *game, t_player *player, const char *file)
 	flood_fill(game, map_temp, player->p_pos.x, player->p_pos.y);
 	if (game->check_collect != game->collect_count || game->check_exit == 0)
 	{
-		write(1, "Error 12\n", 9);
+		write(1, "Error check path\n", 17);
 		while (map_temp[++i])
 			free(map_temp[i]);
 		free(map_temp);

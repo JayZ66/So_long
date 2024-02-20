@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:40:12 by jeza              #+#    #+#             */
-/*   Updated: 2024/02/16 13:14:38 by jeguerin         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:16:15 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,32 @@
 
 /*
 3 steps :
-- First i'm going to read.
+- First i'm going to read. Need to initialize a var. from the structure if it's not used.
 - Then i malloc the array (with the total nb of lines).
 - Finally, i read again the file to initialize the map with each line,
 	that is malloc with strdup.
 */
+
+void	check_empty_map(const char *file, t_game *game)
+{
+	int		fd;
+	char	c;
+
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+	{
+		game->map = NULL;
+		write(1, "Error fd\n", 9);
+		free_everything(game);
+	}
+	if (read(fd, &c, 1) == 0)
+	{
+		game->map = NULL;
+		write(1, "Error : empty file\n", 19);
+		close(fd);
+		free_everything(game);
+	}
+}
 
 void	read_map(const char *file, t_game *game)
 {
@@ -27,11 +48,13 @@ void	read_map(const char *file, t_game *game)
 
 	game->map_height = 0;
 	game->map_width = 0;
+	check_empty_map(game->ber, game);
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		write(1, "Error\n", 6);
-		return ;
+		game->map = NULL;
+		write(1, "Error fd\n", 9);
+		free_everything(game);
 	}
 	while (1)
 	{
@@ -64,7 +87,8 @@ void	fill_tab(const char *file, t_game *game)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		write(1, "Error\n", 6);
+		write(1, "Error fd\n", 8); // To test.
+		free_everything(game);
 		return ;
 	}
 	while (1)

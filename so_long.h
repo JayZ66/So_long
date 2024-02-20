@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:48:48 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/02/16 17:50:59 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/20 16:16:47 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int				map_wall_error(t_game *game);
 int				error_map(t_game *game);
 char			**fill_map_temp(t_game *game, const char *file);
 void			fill_path_map(t_game *game, t_player *player, const char *file);
+void			check_empty_map(const char *file, t_game *game);
 
 // Manage moves & player.
 void			move_to_left(t_player *player, t_game *game);

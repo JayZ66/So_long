@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 09:32:25 by jeza              #+#    #+#             */
-/*   Updated: 2024/02/16 11:10:07 by jeguerin         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:32:43 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ int	error_map(t_game *game)
 		{
 			if (game->map[i][j] != 'E' && game->map[i][j] != 'C'
 				&& game->map[i][j] != '1' && game->map[i][j] != '0'
-				&& game->map[i][j] != 'P')
-				return (1);
+				&& game->map[i][j] != 'P' && game->map[i][j] != '\0')
+				{
+					return (write(1, "Error nb characters\n", 20), 1);
+				}
 			j++;
 		}
 		i++;
@@ -55,7 +57,7 @@ int	check_exit(t_game *game)
 	}
 	if (exit_count != 1)
 	{
-		write(1, "Error\n", 6);
+		write(1, "Error nb exit\n", 14);
 		return (1);
 	}
 	return (0);
@@ -81,7 +83,7 @@ int	check_collect(t_game *game)
 	}
 	if (game->collect_count < 1)
 	{
-		write(1, "Error\n", 6);
+		write(1, "Error nb collect\n", 17);
 		return (1);
 	}
 	return (0);
@@ -111,6 +113,6 @@ int	check_player(t_game *game)
 		i++;
 	}
 	if (player_count != 1)
-		return (write(1, "Error\n", 6), 1);
+		return (write(1, "Error nb player\n", 16), 1);
 	return (0);
 }

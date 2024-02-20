@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_image.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:42:25 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/02/15 14:35:03 by jeza             ###   ########.fr       */
+/*   Updated: 2024/02/19 14:03:07 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	init_imgs(t_game *game)
 	game->wall = mlx_xpm_file_to_image(game->mlx, "sprites/Wall.xpm", &size,
 			&size);
 	game->player.player = mlx_xpm_file_to_image(game->mlx,
-			"sprites/Player1.xpm", &size, &size);
-	game->exit = mlx_xpm_file_to_image(game->mlx, "sprites/Floor1.xpm", &size,
+			"sprites/player.xpm", &size, &size);
+	game->exit = mlx_xpm_file_to_image(game->mlx, "sprites/exit.xpm", &size,
 			&size);
 	game->end = mlx_xpm_file_to_image(game->mlx, "sprites/Winner_win",
 			&size_end, &size_end);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jeza <jeza@student.42.fr>                  +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/18 16:48:24 by jeguerin          #+#    #+#              #
-#    Updated: 2024/02/16 16:03:11 by jeza             ###   ########.fr        #
+#    Updated: 2024/02/19 14:03:43 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,10 @@ CC := gcc
 CFLAGS := -Wall -Wextra -Werror -Iheaders/
 
 #Liste des fichiers source.
-SRCS := main.c handle_image.c handle_events.c check_map.c handle_errors.c \
-	utils.c manage_game.c create_map.c handle_window.c manage_moves.c
+SRCS := main.c handle_image.c handle_events.c \
+	check_map.c handle_errors.c utils.c \
+	manage_game.c create_map.c handle_window.c \
+	manage_moves.c
 GETNEXTLINE := get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 LIBFT = Libft/libft.a
 # Options de la bibliotheque MiniLibX et des bibliotheques systeme
