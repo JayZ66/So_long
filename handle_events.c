@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handle_events.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:17:05 by jeguerin          #+#    #+#             */
-/*   Updated: 2024/02/19 17:44:44 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/21 14:27:00 by jeguerin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-// int	handle_no_event(void *game)
-// {
-// 	(void)game;
-// 	return (0);
-// }
 
 int	manage_keypress(int key, t_game *game)
 {

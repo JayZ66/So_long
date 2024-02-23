@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:40:12 by jeza              #+#    #+#             */
-/*   Updated: 2024/02/20 16:16:15 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/21 17:28:55 by jeguerin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 /*
 3 steps :
-- First i'm going to read. Need to initialize a var. from the structure if it's not used.
+- First i'm going to read. Need to initialize a var. from the structure
+if it's not used.
 - Then i malloc the array (with the total nb of lines).
 - Finally, i read again the file to initialize the map with each line,
 	that is malloc with strdup.
@@ -87,7 +88,7 @@ void	fill_tab(const char *file, t_game *game)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		write(1, "Error fd\n", 8); // To test.
+		write(1, "Error fd\n", 8);
 		free_everything(game);
 		return ;
 	}

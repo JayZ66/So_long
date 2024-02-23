@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 09:32:25 by jeza              #+#    #+#             */
-/*   Updated: 2024/02/20 16:32:43 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/21 17:24:53 by jeguerin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	error_map(t_game *game)
 			if (game->map[i][j] != 'E' && game->map[i][j] != 'C'
 				&& game->map[i][j] != '1' && game->map[i][j] != '0'
 				&& game->map[i][j] != 'P' && game->map[i][j] != '\0')
-				{
-					return (write(1, "Error nb characters\n", 20), 1);
-				}
+			{
+				return (write(1, "Error nb characters\n", 20), 1);
+			}
 			j++;
 		}
 		i++;

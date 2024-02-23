@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 17:19:36 by jeza              #+#    #+#             */
-/*   Updated: 2024/02/20 16:30:17 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/21 18:02:18 by jeguerin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,77 +24,45 @@ int	map_shape_error(t_game *game)
 	while (game->map[i + 1])
 	{
 		if (ft_strlen(game->map[i]) != first_line_length)
-			return(write(1, "Error shape\n", 12), 1);
+			return (write(1, "Error shape\n", 12), 1);
 		i++;
 	}
 	if (first_line_length != ft_strlen(game->map[i]))
 	{
 		last_line = ft_strlen(game->map[i]) + 1;
 		if (first_line_length != last_line)
-			return(write(1, "Error shape\n", 12), 1);
+			return (write(1, "Error shape\n", 12), 1);
 	}
 	return (0);
 }
 
-int	map_wall_error(t_game *game) // ASK CYRIL !!!! + Check si met bien /0 quand lis ?? Pq /n et /0 alors que strdup mais des /0 ??
+int	map_wall_error(t_game *game)
 {
 	int	theo;
 
 	theo = -1;
 	while (game->map[0][++theo])
-	{
 		if (game->map[0][theo] != '1' && game->map[0][theo] != '\n')
 			return (write(1, "Error wall\n", 11), 1);
-	}
 	theo = -1;
 	while (game->map[game->map_height - 1][++theo])
 	{
-		if (game->map[game->map_height - 1][theo] != '1')
+		if (game->map[game->map_height - 1][theo] != '1'
+			&& game->map[game->map_height - 1][theo] != '\n')
 			return (write(1, "Error wall\n", 11), 1);
 	}
 	theo = -1;
 	while (++theo < game->map_height - 1)
 	{
-		if (game->map[theo][0] != '1' && (game->map[theo][game->map_width] != '1' 
-			&& game->map[theo][game->map_width] != '\n'))
+		if (game->map[theo][0] != '1')
+			return (write(1, "Error wall\n", 11), 1);
+		if (game->map[theo][game->map_width - 1] != '1'
+			&& game->map[theo][game->map_width - 1] != '\n'
+				&& game->map[theo][game->map_width - 1] != '\0')
 			return (write(1, "Error wall\n", 11), 1);
 	}
 	return (0);
 }
-
-// int	map_wall_error(t_game *game) // ASK CYRIL !!!! + Check si met bien /0 quand lis ?? Pq /n et /0 alors que strdup mais des /0 ??
-// {
-// 	int	theo;
-
-// 	theo = -1;
-// 	while (game->map[0][++theo])
-// 	{
-// 		if (game->map[0][theo] != '1' && game->map[0][theo] != 13)
-// 			return (write(1, "Error wall\n", 11), 1);
-// 	}
-// 	theo = -1;
-// 	while (game->map[game->map_height - 1][++theo])
-// 	{
-// 		if (game->map[game->map_height - 1][theo] != '1' 
-// 			&& game->map[game->map_height - 1][theo] != '\0')
-// 			return (write(1, "Error wall\n", 11), 1);
-// 	}
-// 	theo = -1;
-// 	while (++theo < game->map_height - 1)
-// 	{
-// 		if (game->map[theo][0] != '1' && game->map[theo][0] != 13)
-// 			return (write(1, "Error wall\n", 11), 1);
-// 	}
-// 	theo = -1;
-// 	while (++theo < game->map_height - 1)
-// 	{
-// 		if (game->map[theo][game->map_width] != '1' && game->map[theo][game->map_width] != '\0' 
-// 			&& game->map[theo][game->map_width] != '\n')
-// 			return (write(1, "Error wall\n", 11), 1);
-// 	}
-// 	return (0);
-// }
-
 
 int	check_file_error(t_game *game)
 {

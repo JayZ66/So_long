@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jeguerin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 17:19:52 by jeza              #+#    #+#             */
-/*   Updated: 2024/02/20 16:28:35 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/21 17:27:06 by jeguerin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,11 @@ int	free_everything(t_game *game)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	if (game->map != NULL)
 	{
-		while (game->map[i])
-		{
+		while (game->map[++i])
 			free(game->map[i]);
-			i++;
-		}
 		free(game->map);
 	}
 	free(game->ber);
